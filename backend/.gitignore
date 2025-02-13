@@ -39,3 +39,7 @@ out/
 application.properties
 
 *.env
+
+
+* mac
+.DS_Store
