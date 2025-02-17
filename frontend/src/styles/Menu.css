@@ -30,3 +30,9 @@
 .menu a:hover {
   background-color: #555;  /* 링크에 마우스를 올렸을 때 배경색 변경 */
 }
+
+.menu img {
+  max-width: 100%;  /* 부모 요소의 폭에 맞게 이미지 크기 자동 조정 */
+  height: auto;  /* 비율 유지하면서 높이 자동 설정 */
+  object-fit: contain;  /* 이미지 비율에 맞게 크기 조정 */
+}

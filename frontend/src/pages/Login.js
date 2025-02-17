@@ -1,9 +1,13 @@
 import React from 'react';
-import '../styles/Login.css'; 
+import '../styles/Login.css';
+import OauthLogin from '../components/OauthLogin'
 
 function Login() {
     return (
-        <h1 className="login">Login</h1>
+        <div className="login">
+            <h1>Login</h1>
+            <OauthLogin></OauthLogin>
+        </div>
     )
 }
 
