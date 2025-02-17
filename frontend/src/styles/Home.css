@@ -1,0 +1,6 @@
+/* Home.css */
+.home {
+    margin-left: 220px;  /* 메뉴의 너비만큼 여백을 추가 (메뉴의 폭이 200px일 경우 220px로 설정) */
+    padding: 20px;  /* 적당한 패딩 */
+  }
+  
