@@ -1,20 +1,21 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Menu from './components/Menu';
+import TokenHandler from './components/TokenHandler';
 
 function App() {
-  const [hello, setHello] = useState('');
-
-  useEffect(() => {
-    axios.get('/api/test')
-    .then((res) => {
-      setHello(res.data);
-    })
-  }, []);
   return (
-      <div className="App">
-        백엔드 데이터 : {hello}
-      </div>
-  );
+    <BrowserRouter>
+      <Menu></Menu>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/oauth/callback" component={TokenHandler} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

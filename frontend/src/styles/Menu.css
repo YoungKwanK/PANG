@@ -1,0 +1,38 @@
+/* Menu.css */
+.menu {
+  display: flex;
+  flex-direction: column;  /* 메뉴 항목들이 세로로 배치되도록 설정 */
+  position: fixed;  /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 200px;  /* 메뉴의 폭 */
+  height: 100vh;  /* 화면 전체 높이 */
+  background-color: #333;
+  color: white;
+  padding-top: 20px;  /* 메뉴 상단에 여백 추가 */
+  padding-left: 20px;  /* 왼쪽 여백 */
+}
+
+.menu div {
+  display: flex;
+  flex-direction: column;  /* 링크들을 세로로 정렬 */
+}
+
+.menu a {
+  color: white;  /* 링크 색 */
+  text-decoration: none;  /* 링크 밑줄 제거 */
+  padding: 10px;
+  margin: 10px 0;  /* 링크 간 간격 */
+  background-color: #444;  /* 링크 배경색 */
+  border-radius: 5px;  /* 링크의 모서리 둥글게 */
+}
+
+.menu a:hover {
+  background-color: #555;  /* 링크에 마우스를 올렸을 때 배경색 변경 */
+}
+
+.menu img {
+  max-width: 100%;  /* 부모 요소의 폭에 맞게 이미지 크기 자동 조정 */
+  height: auto;  /* 비율 유지하면서 높이 자동 설정 */
+  object-fit: contain;  /* 이미지 비율에 맞게 크기 조정 */
+}
