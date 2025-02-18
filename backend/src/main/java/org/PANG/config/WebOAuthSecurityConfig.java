@@ -53,25 +53,26 @@ public class WebOAuthSecurityConfig {
                         .anyRequest().permitAll()
         )
 
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login") //  로그인 페이지 지정
-                        .authorizationEndpoint(auth -> auth
-                                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()) // ✅ 인증 요청 저장소 설정
-                        )
-                        .successHandler(oAuth2SuccessHandler()) //  성공 핸들러 설정
+                .oauth2Login((oauth2Login) -> oauth2Login
+                        .loginPage("/login")
+                        .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
                         .userInfoEndpoint(userInfo -> userInfo
-                                .userService(oAuth2UserCustomService) //  사용자 정보 서비스 설정
+                                .userService(oAuth2UserCustomService) // 사용자 정보 서비스 설정
+                        )
+                        .authorizationEndpoint(auth -> auth
+                                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()) // 인증 요청 저장소 설정
                         )
                 )
 
                 .logout((logoutConfig) ->
                     logoutConfig.logoutSuccessUrl("/")
-                )
-
-                .securityMatcher("/api/**") //  특정 URL 패턴에 대한 설정 분리
-                .exceptionHandling(ex ->
-                        ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 );
+
+        //에러 발생
+//                .securityMatcher("/api/**") //  특정 URL 패턴에 대한 설정 분리
+//                .exceptionHandling(ex ->
+//                        ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//                );
 
         return http.build();
     }

@@ -2,7 +2,7 @@ import React from 'react';
 
 function OauthLogin() {
     const handleLogin = () =>{
-        window.location.href = "/"; //인증할 URL
+        window.location.href = "/oauth2/authorization/google"; //인증할 URL
     }
 
 
