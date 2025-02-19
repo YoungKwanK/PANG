@@ -14,7 +14,7 @@ const OauthCallback = (props) => {
   const state = location.state;
   const code = state?.code;
   console.log(code);
-
+  
   useEffect(() => {
     if (code) {
       // 백엔드로 인가 코드 전달
@@ -31,7 +31,6 @@ const OauthCallback = (props) => {
                 
                 //navigate("/");
             }
-            
         })
         .catch(error=>{
             // if(응답에 유저 로그인 없다고 오면)
@@ -50,3 +49,5 @@ const OauthCallback = (props) => {
 };
 
 export default OauthCallback;
+
+
