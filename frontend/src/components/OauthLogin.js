@@ -1,16 +1,38 @@
-import React from 'react';
+import React from "react";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 function OauthLogin() {
-    const handleLogin = () =>{
-        window.location.href = "/oauth2/authorization/google"; //인증할 URL
-    }
+    //const clientId = process.env.GOOGLE_CLIENT_ID; // 환경 변수 사용
 
+    const GoogleLoginButton = () => {
+        const login = useGoogleLogin({
+            onSuccess: async (response) => {
+                console.log("Google Login Success:", response);
+
+                try {
+                    const res = await axios.post("/api/auth/google", {
+                        code: response.code, // 인가 코드 전달
+                    });
+                    console.log("Backend Response:", res.data);
+                } catch (error) {
+                    console.error("Error sending code to backend", error);
+                }
+            },
+            flow: "auth-code", // 인가 코드 방식 사용
+        });
+
+        return <button onClick={() => login()}>Login with Google</button>;
+    };
 
     return (
-        <div>
-            <button onClick = {handleLogin}>Google로 로그인</button>
-        </div>
-    )
+        <GoogleOAuthProvider clientId="854273761387-pjglgrnmlgr7o3jad9hdkvdbvl34serm.apps.googleusercontent.com">
+            <div>
+                <h1>Google OAuth2 Login</h1>
+                <GoogleLoginButton />
+            </div>
+        </GoogleOAuthProvider>
+    );
 }
 
 export default OauthLogin;
