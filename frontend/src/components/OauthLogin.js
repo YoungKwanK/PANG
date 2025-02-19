@@ -3,7 +3,8 @@ import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 function OauthLogin() {
-    //const clientId = process.env.GOOGLE_CLIENT_ID; // 환경 변수 사용
+    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID; // 환경 변수 사용
+    console.log(clientId);
 
     const GoogleLoginButton = () => {
         const login = useGoogleLogin({
@@ -26,7 +27,7 @@ function OauthLogin() {
     };
 
     return (
-        <GoogleOAuthProvider clientId="854273761387-pjglgrnmlgr7o3jad9hdkvdbvl34serm.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={clientId}>
             <div>
                 <h1>Google OAuth2 Login</h1>
                 <GoogleLoginButton />
