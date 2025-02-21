@@ -56,6 +56,7 @@ public class WebOAuthSecurityConfig {
                         .anyRequest().permitAll()
         )
 
+                //프론트에서 oauth2 인가코드 구현
 //                .oauth2Login((oauth2Login) -> oauth2Login
 //                        .loginPage("/login")
 //                        .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
