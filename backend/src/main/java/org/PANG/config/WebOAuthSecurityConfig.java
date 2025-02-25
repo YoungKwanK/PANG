@@ -9,15 +9,14 @@ import org.PANG.repository.RefreshTokenRepository;
 import org.PANG.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
@@ -41,6 +40,10 @@ public class WebOAuthSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers
+                        .addHeaderWriter(new StaticHeadersWriter("Cross-Origin-Opener-Policy", "same-origin"))
+                )
+
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -48,13 +51,13 @@ public class WebOAuthSecurityConfig {
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/token").permitAll()
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/**").permitAll()
+                       // .requestMatchers("/**").authenticated()
                         .anyRequest().permitAll()
         )
 
+                //프론트에서 oauth2 인가코드 구현
                 .oauth2Login((oauth2Login) -> oauth2Login
-                        .loginPage("/login")
                         .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserCustomService) // 사용자 정보 서비스 설정
@@ -67,12 +70,6 @@ public class WebOAuthSecurityConfig {
                 .logout((logoutConfig) ->
                     logoutConfig.logoutSuccessUrl("/")
                 );
-
-        //에러 발생
-//                .securityMatcher("/api/**") //  특정 URL 패턴에 대한 설정 분리
-//                .exceptionHandling(ex ->
-//                        ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-//                );
 
         return http.build();
     }
