@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -38,6 +39,8 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                 .orElse(User.builder()
                         .email(email)
                         .nickname(name)
+                        .birth(Date.valueOf("2001-01-13"))
+                        .residence("hi")
                         .build());
 
         return userRepository.save(user);
