@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import RegistUser from './pages/registUser';
 import Menu from './components/Menu';
-import TokenHandler from './components/TokenHandler';
+import OauthCallback from './components/OauthCallback';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/oauth/callback" component={TokenHandler} />
+        <Route path="/auth/callback" element={<OauthCallback />} />
+        <Route path="/registUser" element={<RegistUser />} />
       </Routes>
     </BrowserRouter>
   )

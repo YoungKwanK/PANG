@@ -1,12 +1,12 @@
 import React from 'react';
 import '../styles/Login.css';
-import OauthLogin from '../components/OauthLogin'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 
 function Login() {
     return (
         <div className="login">
             <h1>Login</h1>
-            <OauthLogin></OauthLogin>
+            <GoogleLoginButton></GoogleLoginButton>
         </div>
     )
 }
