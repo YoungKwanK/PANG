@@ -57,16 +57,15 @@ public class WebOAuthSecurityConfig {
         )
 
                 //프론트에서 oauth2 인가코드 구현
-//                .oauth2Login((oauth2Login) -> oauth2Login
-//                        .loginPage("/login")
-//                        .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
-//                        .userInfoEndpoint(userInfo -> userInfo
-//                                .userService(oAuth2UserCustomService) // 사용자 정보 서비스 설정
-//                        )
-//                        .authorizationEndpoint(auth -> auth
-//                                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()) // 인증 요청 저장소 설정
-//                        )
-//                )
+                .oauth2Login((oauth2Login) -> oauth2Login
+                        .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(oAuth2UserCustomService) // 사용자 정보 서비스 설정
+                        )
+                        .authorizationEndpoint(auth -> auth
+                                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()) // 인증 요청 저장소 설정
+                        )
+                )
 
                 .logout((logoutConfig) ->
                     logoutConfig.logoutSuccessUrl("/")
