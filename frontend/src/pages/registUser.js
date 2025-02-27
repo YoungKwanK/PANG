@@ -16,11 +16,11 @@ const RegistUser = () => {
                 <label for="birthdate">생년월일:</label>
                 <input type="date" id="birthdate" name="birthdate" value={birth} required onChange={event => {
                     setBirth(event.target.value);
-                }}/><br /><br />
+                }} /><br /><br />
                 <label for="residence">거주지:</label>
                 <input type="text" id="residence" name="residence" value={residence} required onChange={event => {
                     setResidence(event.target.value);
-                }}/><br /><br />
+                }} /><br /><br />
                 <button type="submit">제출</button>
             </form>
         </>
