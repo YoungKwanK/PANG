@@ -35,22 +35,32 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal(); //oauth로 로그인한 사용자의 기본 정보를 가져옴
-        User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
 
-        //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
-        String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
-        saveRefreshToken(user.getId(), refreshToken);
-        addRefreshTokenToCookie(request, response, refreshToken);
+        String email =(String) oAuth2User.getAttribute("email");
+        String name =(String) oAuth2User.getAttribute("name");
 
-        //엑세스 토큰 생성 -> 쿼리에 엑세스 토큰 추가
-        String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        String targetUrl = getTargetUrl(accessToken);
-        
-        //인증 관련 설정값, 쿠키 제거
-        clearAuthenticationAttributes(request, response);
-        
-        //리다이렉트
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        //회원정보가 있을 시
+        if (userService.findByEmail(email)!=null) {
+            User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
+
+            //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+            String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+            saveRefreshToken(user.getId(), refreshToken);
+            addRefreshTokenToCookie(request, response, refreshToken);
+
+            //엑세스 토큰 생성 -> 쿼리에 엑세스 토큰 추가
+            String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+            String targetUrl = getTargetUrl(accessToken);
+
+            //인증 관련 설정값, 쿠키 제거
+            clearAuthenticationAttributes(request, response);
+
+            //리다이렉트
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        }
+        else {
+            response.sendRedirect("http://localhost:3000/additional-info?email=" + email + "&name=" + name);
+        }
     }
 
     // 리프레시 토큰을 전달받아 DB에 저장
