@@ -1,5 +1,7 @@
 package org.PANG.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.PANG.common.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +39,17 @@ public class TestController {
         public String getCredential() {
             return credential;
         }
+    }
+
+    @GetMapping("/protected")
+    public Response protect(HttpServletRequest request) {
+        System.out.println("요청 들어옴");
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            System.out.println(cookie);
+        }
+        return Response.ok("성공적");
     }
 }
 

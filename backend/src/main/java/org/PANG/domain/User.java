@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Table(name = "User")
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
