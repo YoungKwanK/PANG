@@ -13,10 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
@@ -37,36 +35,40 @@ public class WebOAuthSecurityConfig {
                 .requestMatchers("/img/**", "/css/**", "/js/**");
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers(headers -> headers
-                        .addHeaderWriter(new StaticHeadersWriter("Cross-Origin-Opener-Policy", "same-origin"))
-                )
+                .csrf(AbstractHttpConfigurer::disable) //csrf 비활성화
+                .cors(AbstractHttpConfigurer::disable) //cors 비활성화
+                .httpBasic(AbstractHttpConfigurer::disable) // 기본 인증 로그인 비활성화
+                .formLogin(AbstractHttpConfigurer::disable) //기본 Login form 비활성화
 
-                .csrf(AbstractHttpConfigurer::disable)
-
+                //세션 비활성화
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                //토큰 인증 필터 추가
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
+                //접근 권환 설정
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/**").permitAll()
                        // .requestMatchers("/**").authenticated()
                         .anyRequest().permitAll()
         )
 
-                //프론트에서 oauth2 인가코드 구현
+                //oauth 처리
                 .oauth2Login((oauth2Login) -> oauth2Login
                         .successHandler(oAuth2SuccessHandler()) // 로그인 성공 핸들러 설정
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserCustomService) // 사용자 정보 서비스 설정
                         )
-                        .authorizationEndpoint(auth -> auth
+                        .authorizationEndpoint(auth -> auth //인증 요청 저장소 설정
                                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()) // 인증 요청 저장소 설정
                         )
                 )
 
+                //로그아웃 처리
                 .logout((logoutConfig) ->
                     logoutConfig.logoutSuccessUrl("/")
                 );
@@ -92,10 +94,5 @@ public class WebOAuthSecurityConfig {
     @Bean
     public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
