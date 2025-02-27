@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class UserApiController {
 
     private final UserService userService;
@@ -20,6 +19,7 @@ public class UserApiController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody AddUserRequest addUserRequest) {
         Long id = userService.save(addUserRequest);
+        System.out.println(addUserRequest.getNickname());
         return ResponseEntity.ok(200);
     }
 }

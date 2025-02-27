@@ -7,6 +7,8 @@ import org.PANG.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -18,6 +20,7 @@ public class UserService {
 
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
+                .nickname(dto.getNickname())
                 .residence(dto.getResidence())
                 .birth(dto.getBirth())
                 .build()).getId();
@@ -29,7 +32,10 @@ public class UserService {
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }
+        return null;
     }
 }

@@ -16,7 +16,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Base64;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -42,7 +46,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //회원정보가 있을 시
         if (userService.findByEmail(email)!=null) {
             User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
-
             //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
             String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
             saveRefreshToken(user.getId(), refreshToken);
@@ -59,7 +62,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }
         else {
-            response.sendRedirect("http://localhost:3000/additional-info?email=" + email + "&name=" + name);
+            String encodedEmail = URLEncoder.encode(email, StandardCharsets.UTF_8);
+            String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+
+            response.sendRedirect("http://localhost:3000/signup?email=" + encodedEmail + "&name=" + encodedName);
         }
     }
 
