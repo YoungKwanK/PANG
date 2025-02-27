@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Home.css';
 
-function Profile() {
+function UserProfile() {
     console.log("Profile 컴포넌트 렌더링됨"); // 콘솔로 확인해보기
 
     //useState로 사용자 정보 요청
@@ -13,4 +13,4 @@ function Profile() {
     )
 }
 
-export default Profile;
+export default UserProfile;
