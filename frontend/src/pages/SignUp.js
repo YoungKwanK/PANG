@@ -9,7 +9,7 @@ const SignUp = () => {
     const [residence, setResidence] = useState()
     const [searchParam] = useSearchParams();
     const email = searchParam.get("email");
-    const nickname = searchParam.get("name");
+    const name = searchParam.get("name");
 
     const handleSubmit = (event) => {
         event.preventDefault();  // 기본 폼 제출 동작을 막기
@@ -18,7 +18,7 @@ const SignUp = () => {
         const data = {
             email,
             //name,
-            nickname,
+            name,
             birth,
             residence,
         };
@@ -46,12 +46,8 @@ const SignUp = () => {
             <form onSubmit={handleSubmit} className="login">
                 <label for="email">이메일: {email}</label>
                 <br /><br />
-                <label for="name">이름: {nickname}</label>
+                <label for="name">이름: {name}</label>
                 <br /><br />
-                <label for="nickname">닉네임:</label>
-                {/*<input type="text" id="nickname" name="nickname" value={nickname} onChange={event => {*/}
-                {/*    setName(event.target.value);*/}
-                {/*}} /><br /><br />*/}
                 <label for="birthdate">생년월일:</label>
                 <input type="date" id="birthdate" name="birthdate" value={birth} required onChange={event => {
                     setBirth(event.target.value);
