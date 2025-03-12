@@ -36,6 +36,7 @@ public class PostEntity {
     private String title;
     private String content;
     private String category;
+    private String location_name;
     private double latitude;
     private double longitude;
     private LocalDateTime start_time;
@@ -54,6 +55,7 @@ public class PostEntity {
         this.title = post.getTitle();
         this.content = post.getContentText();
         this.category = post.getCategory();
+        this.location_name = post.getLocation().getLocation_name();
         this.latitude = post.getLocation().getLatitude();
         this.longitude = post.getLocation().getLongitude();
         this.start_time = post.getStart_time();
@@ -70,7 +72,8 @@ public class PostEntity {
             .author(author.toUser())
             .content(new Content(title, content))
             .postInfo(
-                new PostInfo(category, latitude, longitude, start_time, end_time, max_users,
+                new PostInfo(category, location_name, latitude, longitude, start_time, end_time,
+                    max_users,
                     new PositiveIntegerCounter(current_users), age,
                     state))
             .build();

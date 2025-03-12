@@ -3,8 +3,8 @@ package org.PANG.post.domain;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.PANG.common.domain.Location;
 import org.PANG.common.domain.PositiveIntegerCounter;
-import org.PANG.post.domain.common.Location;
 
 @Getter
 @Setter
@@ -19,10 +19,11 @@ public class PostInfo {
     private int age;
     private PostState postState;
 
-    public PostInfo(String category, double latitude, double longitude, LocalDateTime start_time,
+    public PostInfo(String category, String location_name, double latitude, double longitude,
+        LocalDateTime start_time,
         LocalDateTime end_time, int max_users, int age) {
         this.category = category;
-        this.location = new Location(latitude, longitude);
+        this.location = new Location(location_name, latitude, longitude);
         this.start_time = start_time;
         this.end_time = end_time;
         this.max_users = max_users;
@@ -31,11 +32,12 @@ public class PostInfo {
         postState = PostState.CONTINUE;
     }
 
-    public PostInfo(String category, double latitude, double longitude, LocalDateTime start_time,
+    public PostInfo(String category, String location_name, double latitude, double longitude,
+        LocalDateTime start_time,
         LocalDateTime end_time, int max_users, PositiveIntegerCounter current_users, int age,
         PostState postState) {
         this.category = category;
-        this.location = new Location(latitude, longitude);
+        this.location = new Location(location_name, latitude, longitude);
         this.start_time = start_time;
         this.end_time = end_time;
         this.max_users = max_users;
@@ -54,6 +56,4 @@ public class PostInfo {
     public void decreaseUsers() {
         current_users.decreaseCount();
     }
-
-
 }

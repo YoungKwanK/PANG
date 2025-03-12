@@ -1,13 +1,15 @@
 package org.PANG.post.domain;
 
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.PANG.post.domain.common.Location;
+import org.PANG.common.domain.Location;
 import org.PANG.user.domain.User;
 
 @Builder
 @Getter
+@AllArgsConstructor
 public class Post {
 
     private final Long id;
@@ -23,10 +25,12 @@ public class Post {
     }
 
     public static Post createDefaultPost(Long id, User author, String title, String contentText,
-        String category, double latitude, double longitude, LocalDateTime start_time,
+        String category, String location_name, double latitude, double longitude,
+        LocalDateTime start_time,
         LocalDateTime end_time, int max_users, int age) {
         return new Post(id, author, new Content(title, contentText),
-            new PostInfo(category, latitude, longitude, start_time, end_time, max_users, age));
+            new PostInfo(category, location_name, latitude, longitude, start_time, end_time,
+                max_users, age));
     }
 
     public String getTitle() {

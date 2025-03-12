@@ -1,4 +1,4 @@
-package org.PANG.post.domain.common;
+package org.PANG.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class Location {
 
+    private String location_name;
     private double latitude;
     private double longitude;
 
