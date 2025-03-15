@@ -19,7 +19,8 @@ public class PostService {
     public Post createPost(CreatePostRequestDto dto) {
         User user = userService.getUser(dto.userId());
         Post post = Post.createDefaultPost(null, user, dto.title(), dto.contentText(),
-            dto.category(), dto.latitude(), dto.longitude(), dto.start_time(), dto.end_time(),
+            dto.category(), dto.location_name(), dto.latitude(), dto.longitude(), dto.start_time(),
+            dto.end_time(),
             dto.max_users(), dto.age());
         return postRepository.save(post);
     }
