@@ -17,6 +17,7 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
 
 
     @Override
+    @Transactional
     public RefreshToken save(RefreshToken refreshToken) {
         RefreshTokenEntity entity = new RefreshTokenEntity(refreshToken);
         Long userId = entity.getUserId();

@@ -10,6 +10,7 @@ const SignUp = () => {
     const [searchParam] = useSearchParams();
     const email = searchParam.get("email");
     const name = searchParam.get("name");
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();  // 기본 폼 제출 동작을 막기
@@ -26,14 +27,14 @@ const SignUp = () => {
         console.log(data);
 
         // axios를 사용하여 POST 요청 보내기
-        axios.post('api/sign-up', data, {
+        axios.post('api/user/sign-up', data, {
             headers: {
                 'Content-Type': 'application/json',  // 서버에 JSON 형식으로 데이터 보내기
             },
         })
             .then((response) => {
                 console.log('Success:', response.data);  // 서버 응답 처리
-                //navigator("/login");
+                navigate("/");
             })
             .catch((error) => {
                 console.error('Error:', error);  // 오류 처리

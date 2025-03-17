@@ -53,7 +53,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
             String targetUrl = getTargetUrl(accessToken);
 
-            //인증 관련 설정값, 쿠키 제거W
+            //인증 관련 설정값, 쿠키 제거
             clearAuthenticationAttributes(request, response);
 
             //리다이렉트
