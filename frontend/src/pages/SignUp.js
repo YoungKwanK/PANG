@@ -12,6 +12,16 @@ const SignUp = () => {
     const name = searchParam.get("name");
     const navigate = useNavigate();
 
+    // 거주지 입력할 때 카카오API를 통해 주소지 입력
+    const handleSearch=()=>{
+        new window.daum.Postcode({
+            oncomplete: function(data){
+                const selectedAddress = data.address;
+                setResidence(selectedAddress);
+            }
+        }).open();
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();  // 기본 폼 제출 동작을 막기
 
@@ -54,9 +64,8 @@ const SignUp = () => {
                     setBirth(event.target.value);
                 }} /><br /><br />
                 <label for="residence">거주지:</label>
-                <input type="text" id="residence" name="residence" value={residence} required onChange={event => {
-                    setResidence(event.target.value);
-                }} /><br /><br />
+                <button type="button" onClick={handleSearch}>거주지 입력</button>
+                <br/> <br/>
                 <button type="submit">제출</button>
             </form>
         </>

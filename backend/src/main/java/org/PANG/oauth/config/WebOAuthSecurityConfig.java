@@ -56,8 +56,8 @@ public class WebOAuthSecurityConfig {
 
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/**").permitAll()
-                // .requestMatchers("/**").authenticated()
-                .anyRequest().permitAll()
+                //.requestMatchers("/**").authenticated()
+                //.anyRequest().authenticated()
             )
 
             //프론트에서 oauth2 인가코드 구현
